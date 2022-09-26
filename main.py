@@ -16,11 +16,6 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 # initialize the Vision class
 vision_limestone = Vision('wow_bait.png')
 
-'''
-# https://www.crazygames.com/game/guns-and-bottle
-wincap = WindowCapture()
-vision_gunsnbottle = Vision('gunsnbottle.jpg')
-'''
 
 loop_time = time()
 while(True):
