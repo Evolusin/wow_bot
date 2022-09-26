@@ -6,10 +6,16 @@ from windowcapture import get_screenshot
 from vision import Vision
 
 
-
 # initialize the Vision class
-vision_limestone = Vision('wow_bait.png')
 
+
+# get templates
+img_dir = "images/"
+
+temp_names = []
+for f in os.listdir(img_dir):
+    temp_names.append(f)
+    # templates.append(cv.imread(f"{img_dir}/{f}".format(f),0))
 
 loop_time = time()
 while(True):
@@ -18,8 +24,9 @@ while(True):
     screenshot = get_screenshot()
 
     # display the processed image
-    points = vision_limestone.find(screenshot, 0.5, 'rectangles')
-
+    for f in temp_names:
+        vision_limestone = Vision(f'{img_dir}{f}')
+        points = vision_limestone.find(screenshot, 0.7, 'rectangles')
     # debug the loop rate
     # print('FPS {}'.format(1 / (time() - loop_time)))
 
