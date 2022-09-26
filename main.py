@@ -24,7 +24,7 @@ while(True):
     screenshot = get_screenshot()
 
     # display the processed image
-    points = vision_limestone.find(screenshot, 0.1, 'rectangles')
+    points = vision_limestone.find(screenshot, 0.5, 'rectangles')
     #points = vision_gunsnbottle.find(screenshot, 0.7, 'points')
 
     # debug the loop rate
@@ -36,4 +36,8 @@ while(True):
         cv.destroyAllWindows()
         break
 
-print('Done.')
+# screenshot = get_screenshot()
+# cv.imshow('t',screenshot)
+# cv.waitKey()
+# points = vision_limestone.find(screenshot, 0.5, debug_mode='rectangles')
+# cv.imshow('t',points)
