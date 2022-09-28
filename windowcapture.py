@@ -9,10 +9,9 @@ right = 2
 top   = 0
 btm   = 2 
 
-def get_screenshot():
+def get_screenshot(monitor):
     with mss.mss() as sct:
         # Part of the screen to capture
-        monitor = {"top": 100, "left": 100, "width": 1700, "height": 800}
         
 
         while "Screen capturing":

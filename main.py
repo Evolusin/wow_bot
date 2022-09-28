@@ -13,17 +13,21 @@ from vision import Vision
 img_dir = "images/"
 
 temp_names = []
-for f in os.listdir(img_dir):
-    temp_names.append(f)
-    # templates.append(cv.imread(f"{img_dir}/{f}".format(f),0))
+
+def get_templates(img_dir,temp_names):
+    for f in os.listdir(img_dir):
+        temp_names.append(f)
+get_templates(img_dir,temp_names)
 
 loop_time = time()
+detected_screen = {}
+monitor = {"top": 100, "left": 100, "width": 1700, "height": 800}
 
-def loop():
+def loop(monitor):
     while(True):
 
         # get an updated image of the game
-        screenshot = get_screenshot()
+        screenshot = get_screenshot(monitor)
 
         # display the processed image
         for f in temp_names:
@@ -39,4 +43,8 @@ def loop():
             cv.destroyAllWindows()
             break
 
-loop()
+
+if detected_screen:
+    print("Nie pusta")
+else:
+    loop(monitor)
