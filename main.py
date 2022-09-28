@@ -33,7 +33,9 @@ def loop(monitor):
         for f in temp_names:
             vision_limestone = Vision(f'{img_dir}{f}')
             points = vision_limestone.find(screenshot, 0.6, 'rectangles')
-            # print(points)
+            if points:
+                detected_screen = points
+                print(detected_screen)
         # debug the loop rate
         # print('FPS {}'.format(1 / (time() - loop_time)))
         # print(points)

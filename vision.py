@@ -47,6 +47,6 @@ class Vision:
         # "Relative difference between sides of the rectangles to merge them into a group."
         rectangles, weights = cv.groupRectangles(rectangles, groupThreshold=1, eps=0.5)
         cv.imshow('Matches', haystack_img)
-        print(rectangles)
+        # print(rectangles)
         for (x, y, w, h) in rectangles:
             return x,y,w,h
