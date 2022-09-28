@@ -42,65 +42,11 @@ class Vision:
             # Add every box to the list twice in order to retain single (non-overlapping) boxes
             rectangles.append(rect)
             rectangles.append(rect)
-            # if rect:
-            #     print(rect)
-            #     line_color = (0, 255, 0)
-            #     line_type = cv.LINE_4
-            
-            #     cv.rectangle(haystack_img, rect[0], rect[1], color=line_color, 
-            #                     lineType=line_type, thickness=2)
+
         # Apply group rectangles.
-        # The groupThreshold parameter should usually be 1. If you put it at 0 then no grouping is
-        # done. If you put it at 2 then an object needs at least 3 overlapping rectangles to appear
-        # in the result. I've set eps to 0.5, which is:
         # "Relative difference between sides of the rectangles to merge them into a group."
         rectangles, weights = cv.groupRectangles(rectangles, groupThreshold=1, eps=0.5)
         cv.imshow('Matches', haystack_img)
         print(rectangles)
         for (x, y, w, h) in rectangles:
             return x,y,w,h
-
-        # points = []
-        # if len(rectangles):
-        #     #print('Found needle.')
-
-        #     line_color = (0, 255, 0)
-        #     line_type = cv.LINE_4
-        #     marker_color = (255, 0, 255)
-        #     marker_type = cv.MARKER_CROSS
-
-        #     # points = []
-        #     # Loop over all the rectangles
-        #     for (x, y, w, h) in rectangles:
-
-        #         # Determine the center position
-        #         center_x = x + int(w/2)
-        #         center_y = y + int(h/2)
-        #         # Save the points
-        #         points.append((center_x, center_y))
-
-        #         if debug_mode == 'rectangles':
-        #             # Determine the box position
-        #             top_left = (x, y)
-        #             x2 = x + w
-        #             y2 = y + h
-        #             print(h)
-        #             print("width")
-        #             print(w)
-        #             bottom_right = (x2, y2)
-        #             # Draw the box
-        #             ctr = cv.rectangle(haystack_img, top_left, bottom_right, color=line_color, 
-        #                         lineType=line_type, thickness=2)
-        #             cv.rectangle(haystack_img, top_left, bottom_right, color=line_color, 
-        #                         lineType=line_type, thickness=2)
-                    
-        #             # print(points)
-        #         elif debug_mode == 'points':
-        #             # Draw the center point
-        #             cv.drawMarker(haystack_img, (center_x, center_y), 
-        #                         color=marker_color, markerType=marker_type, 
-        #                         markerSize=40, thickness=2)
-
-        # if debug_mode:
-        #     cv.imshow('Matches', haystack_img)
-        # return points
