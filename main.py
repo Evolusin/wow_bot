@@ -18,21 +18,25 @@ for f in os.listdir(img_dir):
     # templates.append(cv.imread(f"{img_dir}/{f}".format(f),0))
 
 loop_time = time()
-while(True):
 
-    # get an updated image of the game
-    screenshot = get_screenshot()
+def loop():
+    while(True):
 
-    # display the processed image
-    for f in temp_names:
-        vision_limestone = Vision(f'{img_dir}{f}')
-        points = vision_limestone.find(screenshot, 0.7, 'rectangles')
-    # debug the loop rate
-    # print('FPS {}'.format(1 / (time() - loop_time)))
+        # get an updated image of the game
+        screenshot = get_screenshot()
 
-    # press 'q' with the output window focused to exit.
-    # waits 1 ms every loop to process key presses
-    if cv.waitKey(1) == ord('q'):
-        cv.destroyAllWindows()
-        break
+        # display the processed image
+        for f in temp_names:
+            vision_limestone = Vision(f'{img_dir}{f}')
+            points = vision_limestone.find(screenshot, 0.6, 'rectangles')
+            # print(points)
+        # debug the loop rate
+        # print('FPS {}'.format(1 / (time() - loop_time)))
+        # print(points)
+        # press 'q' with the output window focused to exit.
+        # waits 1 ms every loop to process key presses
+        if cv.waitKey(1) == ord('q'):
+            cv.destroyAllWindows()
+            break
 
+loop()

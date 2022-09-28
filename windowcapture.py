@@ -12,7 +12,8 @@ btm   = 2
 def get_screenshot():
     with mss.mss() as sct:
         # Part of the screen to capture
-        monitor = {"top": 40, "left": 0, "width": 1700, "height": 800}
+        monitor = {"top": 100, "left": 100, "width": 1700, "height": 800}
+        
 
         while "Screen capturing":
             last_time = time.time()
