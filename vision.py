@@ -11,7 +11,7 @@ class Vision:
     method = None
 
     # constructor
-    def __init__(self, needle_img_path, method=cv.TM_CCOEFF_NORMED):
+    def __init__(self, needle_img_path = None, method=cv.TM_CCOEFF_NORMED):
         # load the image we're trying to match
         # https://docs.opencv.org/4.2.0/d4/da8/group__imgcodecs.html
         self.needle_img = cv.imread(needle_img_path, cv.IMREAD_UNCHANGED)
@@ -23,6 +23,11 @@ class Vision:
         # There are 6 methods to choose from:
         # TM_CCOEFF, TM_CCOEFF_NORMED, TM_CCORR, TM_CCORR_NORMED, TM_SQDIFF, TM_SQDIFF_NORMED
         self.method = method
+
+    def record_screen(self, image):
+        cv.namedWindow("Matches", cv.WINDOW_NORMAL)
+        cv.imshow('Matches', image)
+        return None
 
     def find(self, haystack_img, threshold=0.5, debug_mode=None):
         # run the OpenCV algorithm
@@ -46,7 +51,9 @@ class Vision:
         # Apply group rectangles.
         # "Relative difference between sides of the rectangles to merge them into a group."
         rectangles, weights = cv.groupRectangles(rectangles, groupThreshold=1, eps=0.5)
-        cv.imshow('Matches', haystack_img)
+        # cv.imshow('Matches', haystack_img)
+        self.record_screen(haystack_img)
+        values_to_return = rectangles
         # print(rectangles)
         for (x, y, w, h) in rectangles:
             return x,y,w,h
