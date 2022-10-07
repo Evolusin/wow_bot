@@ -11,7 +11,7 @@ class Vision:
     method = None
 
     # constructor
-    def __init__(self, needle_img_path, method=cv.TM_CCOEFF_NORMED):
+    def __init__(self, needle_img_path = None, method=cv.TM_CCOEFF_NORMED):
         # load the image we're trying to match
         # https://docs.opencv.org/4.2.0/d4/da8/group__imgcodecs.html
         self.needle_img = cv.imread(needle_img_path, cv.IMREAD_UNCHANGED)
@@ -24,6 +24,11 @@ class Vision:
         # TM_CCOEFF, TM_CCOEFF_NORMED, TM_CCORR, TM_CCORR_NORMED, TM_SQDIFF, TM_SQDIFF_NORMED
         self.method = method
 
+    def record_screen(self, image):
+        cv.namedWindow("Matches", cv.WINDOW_NORMAL)
+        cv.imshow('Matches', image)
+        return None
+
     def find(self, haystack_img, threshold=0.5, debug_mode=None):
         # run the OpenCV algorithm
         result = cv.matchTemplate(haystack_img, self.needle_img, self.method)
@@ -32,7 +37,6 @@ class Vision:
         locations = np.where(result >= threshold)
         locations = list(zip(*locations[::-1]))
         
-
         # You'll notice a lot of overlapping rectangles get drawn. We can eliminate those redundant
         # locations by using groupRectangles().
         # First we need to create the list of [x, y, w, h] rectangles
@@ -42,68 +46,12 @@ class Vision:
             # Add every box to the list twice in order to retain single (non-overlapping) boxes
             rectangles.append(rect)
             rectangles.append(rect)
-            # if rect:
-            #     print(rect)
-            #     line_color = (0, 255, 0)
-            #     line_type = cv.LINE_4
-            
-            #     cv.rectangle(haystack_img, rect[0], rect[1], color=line_color, 
-            #                     lineType=line_type, thickness=2)
+
         # Apply group rectangles.
-        # The groupThreshold parameter should usually be 1. If you put it at 0 then no grouping is
-        # done. If you put it at 2 then an object needs at least 3 overlapping rectangles to appear
-        # in the result. I've set eps to 0.5, which is:
         # "Relative difference between sides of the rectangles to merge them into a group."
         rectangles, weights = cv.groupRectangles(rectangles, groupThreshold=1, eps=0.5)
-
-        points = []
-        if len(rectangles):
-            #print('Found needle.')
-
-            line_color = (0, 255, 0)
-            line_type = cv.LINE_4
-            marker_color = (255, 0, 255)
-            marker_type = cv.MARKER_CROSS
-
-            # points = []
-            # Loop over all the rectangles
-            for (x, y, w, h) in rectangles:
-
-                # Determine the center position
-                center_x = x + int(w/2)
-                center_y = y + int(h/2)
-                # Save the points
-                points.append((center_x, center_y))
-
-                if debug_mode == 'rectangles':
-                    # Determine the box position
-                    top_left = (x, y)
-                    x2 = x + w
-                    y2 = y + h
-                    print(h)
-                    print("width")
-                    print(w)
-                    bottom_right = (x2, y2)
-                    # Draw the box
-                    ctr = cv.rectangle(haystack_img, top_left, bottom_right, color=line_color, 
-                                lineType=line_type, thickness=2)
-                    cv.rectangle(haystack_img, top_left, bottom_right, color=line_color, 
-                                lineType=line_type, thickness=2)
-                    # print(points)
-                elif debug_mode == 'points':
-                    # Draw the center point
-                    cv.drawMarker(haystack_img, (center_x, center_y), 
-                                color=marker_color, markerType=marker_type, 
-                                markerSize=40, thickness=2)
-
-        if debug_mode:
-
-            cv.imshow('Matches', haystack_img)
-            # img = cv.cvtColor(haystack_img, cv.COLOR_BGRA2GRAY)
-            # print(np.array(img))
-            # print(img)
-            # cv.imshow('OpenCV/Numpy grayscale',img)
-            # cv.waitKey()
-            #cv.imwrite('result_click_point.jpg', haystack_img)
-
-        return points
+        # cv.imshow('Matches', haystack_img)
+        self.record_screen(haystack_img)
+        # print(rectangles)
+        for (x, y, w, h) in rectangles:
+            return x,y,w,h

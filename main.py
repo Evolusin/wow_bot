@@ -1,42 +1,42 @@
 import cv2 as cv
 import numpy as np
-import os
-from time import time
-from windowcapture import get_screenshot
+from windowcapture import get_screenshot, convert_tuple2dict
 from vision import Vision
+from settings import Settings
+from bait_analize import analize_bait
 
 
-# initialize the Vision class
+config = Settings()
+config.get_templates()
 
+def get_bait_localization(monitor):
+    points = None
+    # get an updated image of the game
+    screenshot = get_screenshot(monitor)
 
-# get templates
-img_dir = "images/"
+    # display the processed image
+    for f in config.temp_names:
+        vision_limestone = Vision(f'{config.img_dir}{f}')
+        points = vision_limestone.find(screenshot, 0.6, 'rectangles')
+        if points:
+            print(f"Detected bait at - {points}")
+            return points
 
-temp_names = []
-for f in os.listdir(img_dir):
-    temp_names.append(f)
-    # templates.append(cv.imread(f"{img_dir}/{f}".format(f),0))
-
-loop_time = time()
-
-def loop():
-    while(True):
-
-        # get an updated image of the game
-        screenshot = get_screenshot()
-
-        # display the processed image
-        for f in temp_names:
-            vision_limestone = Vision(f'{img_dir}{f}')
-            points = vision_limestone.find(screenshot, 0.6, 'rectangles')
-            # print(points)
-        # debug the loop rate
-        # print('FPS {}'.format(1 / (time() - loop_time)))
-        # print(points)
-        # press 'q' with the output window focused to exit.
-        # waits 1 ms every loop to process key presses
-        if cv.waitKey(1) == ord('q'):
+        
+while True:
+    if config.mode == 0:
+        zone = get_bait_localization(config.monitor)
+        if zone is not None:
+            config.mode = 1
             cv.destroyAllWindows()
-            break
 
-loop()
+    elif config.mode == 1:
+        new_dict = convert_tuple2dict(zone)
+        config.mode = 2
+
+    elif config.mode == 2:
+        analize_bait(new_dict)
+
+    if cv.waitKey(1) == ord('q'):
+                cv.destroyAllWindows()
+                break
