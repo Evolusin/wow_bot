@@ -1,7 +1,7 @@
 import numpy as np
 import cv2 as cv
 import mss
-from time import perf_counter as T
+import time
 
 
 def get_screenshot(monitor):
@@ -23,5 +23,9 @@ def convert_tuple2dict(tuple):
 
 
 def record_screen(image):
+    image = cv.cvtColor(np.array(image),cv.COLOR_BGRA2GRAY)
+    white_pixels = (image >= 245).sum()
     cv.imshow("Matches", image)
+    if white_pixels > 3:
+        print(white_pixels)
     return None
