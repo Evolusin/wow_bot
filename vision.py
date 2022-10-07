@@ -37,7 +37,6 @@ class Vision:
         locations = np.where(result >= threshold)
         locations = list(zip(*locations[::-1]))
         
-
         # You'll notice a lot of overlapping rectangles get drawn. We can eliminate those redundant
         # locations by using groupRectangles().
         # First we need to create the list of [x, y, w, h] rectangles
@@ -53,7 +52,6 @@ class Vision:
         rectangles, weights = cv.groupRectangles(rectangles, groupThreshold=1, eps=0.5)
         # cv.imshow('Matches', haystack_img)
         self.record_screen(haystack_img)
-        values_to_return = rectangles
         # print(rectangles)
         for (x, y, w, h) in rectangles:
             return x,y,w,h
