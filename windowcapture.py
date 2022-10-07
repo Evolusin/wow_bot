@@ -43,6 +43,7 @@ def reset_mode():
     print("Reseting in 2 seconds")
     time.sleep(1)
     print("Reseting in 1 seconds")
+    time.sleep(1.5)
     cv.destroyAllWindows()
     mode = 0
     pyautogui.press('1')

@@ -22,10 +22,10 @@ class BaitAnalizator:
         # get an updated image of the game
         screenshot = get_screenshot(monitor)
 
-        # display the processed image
+        # display the processed images
         for f in config.temp_names:
             vision_limestone = Vision(f"{config.img_dir}{f}")
-            points = vision_limestone.find(screenshot, 0.6, "rectangles")
+            points = vision_limestone.find(screenshot, 0.7, "rectangles")
             if points:
                 print(f"Detected bait at - {points}")
                 return points
@@ -42,8 +42,8 @@ class BaitAnalizator:
     
     def check_spalsh(self, image):
         splashed = False
-        white_pixels = (image >= 245).sum()
-        if white_pixels > 5:
+        white_pixels = (image >= 180).sum()
+        if white_pixels > 1:
             print(f"Got splash!")
             splashed = True
             return splashed

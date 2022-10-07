@@ -5,7 +5,7 @@ from bait_analize import BaitAnalizator
 import time
 import pyautogui
 
-def counter_increase(self):
+def counter_increase():
         config.counter = config.counter + 1
 
 
