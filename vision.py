@@ -52,8 +52,7 @@ class Vision:
         rectangles, weights = cv.groupRectangles(
             rectangles, groupThreshold=1, eps=0.5
         )
-        # cv.imshow('Matches', haystack_img)
-        self.record_screen(haystack_img)
-        # print(rectangles)
+        # Record screen and show it
+        # self.record_screen(haystack_img)
         for (x, y, w, h) in rectangles:
             return x, y, w, h
