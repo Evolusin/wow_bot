@@ -2,6 +2,7 @@ import numpy as np
 import cv2 as cv
 import mss
 import time
+import pyautogui
 
 
 def get_screenshot(monitor):
@@ -21,11 +22,30 @@ def convert_tuple2dict(tuple):
     created_dict = {"top": top, "left": left, "width": width, "height": height}
     return created_dict
 
+def convert_tuple2dict_position(tuple):
+    x = int(tuple[0]) 
+    y = int(tuple[1])
+    width = int(tuple[2])
+    height = int(tuple[3])
+    x = x + (width/2)
+    y = y + (height/2)
+    return x,y
+
 
 def record_screen(image):
     image = cv.cvtColor(np.array(image),cv.COLOR_BGRA2GRAY)
-    white_pixels = (image >= 245).sum()
     cv.imshow("Matches", image)
-    if white_pixels > 3:
-        print(white_pixels)
-    return None
+    return image
+
+def reset_mode():
+    print("Reseting in 3 seconds")
+    time.sleep(1)
+    print("Reseting in 2 seconds")
+    time.sleep(1)
+    print("Reseting in 1 seconds")
+    cv.destroyAllWindows()
+    mode = 0
+    pyautogui.press('1')
+    print("Throwing fishing pole")
+    return mode
+

@@ -10,6 +10,7 @@ class Settings:
         self.mode = 0
         self.new_monitor = {}
         self.get_templates()
+        self.counter = 0
 
     def get_templates(self):
         for f in os.listdir(self.img_dir):
