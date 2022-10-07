@@ -1,9 +1,7 @@
-import cv2 as cv
-import numpy as np
 import os
-import time
 
-class Settings():
+
+class Settings:
     def __init__(self):
         # get templates
         self.img_dir = "images/"
@@ -12,6 +10,7 @@ class Settings():
         self.mode = 0
         self.new_monitor = {}
         self.get_templates()
+
     def get_templates(self):
         for f in os.listdir(self.img_dir):
             self.temp_names.append(f)

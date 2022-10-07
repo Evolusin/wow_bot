@@ -1,9 +1,7 @@
 import numpy as np
 import cv2 as cv
 import mss
-import time
 from time import perf_counter as T
-
 
 
 def get_screenshot(monitor):
@@ -14,6 +12,7 @@ def get_screenshot(monitor):
             img = np.array(sct.grab(monitor))
             return img
 
+
 def convert_tuple2dict(tuple):
     left = int(tuple[0])
     top = int(tuple[1])
@@ -22,6 +21,7 @@ def convert_tuple2dict(tuple):
     created_dict = {"top": top, "left": left, "width": width, "height": height}
     return created_dict
 
+
 def record_screen(image):
-        cv.imshow('Matches', image)
-        return None
+    cv.imshow("Matches", image)
+    return None
