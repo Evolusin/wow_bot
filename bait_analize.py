@@ -42,8 +42,8 @@ class BaitAnalizator:
     
     def check_spalsh(self, image):
         splashed = False
-        white_pixels = (image >= 180).sum()
-        if white_pixels > 1:
+        white_pixels = (image >= 220).sum()
+        if white_pixels > 3:
             print(f"Got splash!")
             splashed = True
             return splashed
@@ -52,7 +52,7 @@ class BaitAnalizator:
 
     def click_point(self, x,y):
         pyautogui.click(x,y,button='right')
-        time.sleep(0.5)
+        time.sleep(1)
         pyautogui.moveTo(100,100)
     
 
