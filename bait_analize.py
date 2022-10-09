@@ -51,8 +51,10 @@ class BaitAnalizator:
             return splashed
 
     def click_point(self, x,y):
+        pyautogui.moveTo(x,y)
+        time.sleep(0.5)
         pyautogui.click(x,y,button='right')
-        time.sleep(1)
+        time.sleep(2)
         pyautogui.moveTo(100,100)
     
 

@@ -34,7 +34,7 @@ def convert_tuple2dict_position(tuple):
 
 def record_screen(image):
     image = cv.cvtColor(np.array(image),cv.COLOR_BGRA2GRAY)
-    cv.imshow("Matches", image)
+    # cv.imshow("Matches", image)
     return image
 
 def reset_mode():
