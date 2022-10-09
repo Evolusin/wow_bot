@@ -11,6 +11,11 @@ def counter_increase():
 
 config = Settings()
 analizator = BaitAnalizator()
+timer = 600
+bait_time = time.perf_counter()
+time.sleep(2)
+bait_second = time.perf_counter()
+
 
 while True:
     if config.mode == 0:
@@ -39,6 +44,18 @@ while True:
             counter_increase()
             print(f"Number of gathered fishes - {config.counter}")
             elapsed = 0
+            elapsed_bait = int(bait_second - bait_time)
+            left_time = timer - elapsed_bait
+            if elapsed_bait > timer:
+                print("Aplying lure")
+                bait_time = time.perf_counter()
+                pyautogui.press("2")
+                time.sleep(5)
+                bait_second = time.perf_counter()
+                print("Done")
+            else:
+                bait_second = time.perf_counter()
+                print(f"Time left to lure - {left_time}")
             config.mode = reset_mode()
 
             
