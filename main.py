@@ -16,7 +16,7 @@ bait_time = time.perf_counter()
 time.sleep(2)
 bait_second = time.perf_counter()
 
-
+print("Bot launched")
 while True:
     if config.mode == 0:
         zone = analizator.get_bait_localization(config.monitor)

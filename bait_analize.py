@@ -55,7 +55,7 @@ class BaitAnalizator:
         time.sleep(0.5)
         pyautogui.click(x,y,button='right')
         time.sleep(2)
-        pyautogui.moveTo(100,100)
+        pyautogui.moveTo(100,400)
     
 
 config = Settings()
